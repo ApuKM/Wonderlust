@@ -1,20 +1,21 @@
-import { Button, Calendar } from "@heroui/react";
-import { FiExternalLink } from "react-icons/fi";
 import Image from "next/image";
-import { LuMapPin } from "react-icons/lu";
+import React from "react";
 import { FaRegCalendar } from "react-icons/fa6";
-import Link from "next/link";
-const DestinationCard = ({ destination }) => {
-  const { _id, imageUrl, price, destinationName, duration, country } = destination;
+import { LuMapPin } from "react-icons/lu";
 
+const DestinationDetailsPage = async ({ params }) => {
+  const { id } = await params;
+  const res = await fetch(`http://localhost:5000/destination/${id}`);
+  const {imageUrl, country, destinationName, duration, price, description} = await res.json();
+  
   return (
-    <div className="border">
+    <div>
       <Image
-        className="h-50"
+        className="w-full h-100 object-cover"
         alt={destinationName}
         src={imageUrl}
-        height={400}
-        width={400}
+        height={500}
+        width={800}
       />
 
       <div className="p-2">
@@ -35,10 +36,13 @@ const DestinationCard = ({ destination }) => {
             <h3 className="text-2xl font-bold">$ {price}</h3>
           </div>
         </div>
-        <Link href={`/destinations/${_id}`} className="flex items-center"><Button variant="ghost" className={'mt-1 text-cyan-500'}> <FiExternalLink/> Book Now</Button></Link>
+
+        <h1 className="mt-10 text-2xl font-bold">Overview</h1>
+
+        <p>{description}</p>
       </div>
     </div>
   );
 };
 
-export default DestinationCard;
+export default DestinationDetailsPage;
