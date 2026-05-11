@@ -1,3 +1,4 @@
+import EditModal from "@/components/EditModal";
 import Image from "next/image";
 import React from "react";
 import { FaRegCalendar } from "react-icons/fa6";
@@ -6,10 +7,14 @@ import { LuMapPin } from "react-icons/lu";
 const DestinationDetailsPage = async ({ params }) => {
   const { id } = await params;
   const res = await fetch(`http://localhost:5000/destination/${id}`);
-  const {imageUrl, country, destinationName, duration, price, description} = await res.json();
-  
+  const destinationDetails = await res.json();
+  const {imageUrl, country, destinationName, duration, price, description} = destinationDetails;
+
   return (
-    <div>
+    <div className="max-w-7xl mx-auto">
+        <div className="flex  items-center gap-3 justify-end mt-5 mb-3">
+            <EditModal destinationDetails={destinationDetails}/>
+        </div>
       <Image
         className="w-full h-100 object-cover"
         alt={destinationName}
