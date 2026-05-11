@@ -1,6 +1,7 @@
 "use client"
 
 import { FieldError, Input, Label, TextField, Select, ListBox, TextArea, Button, Card } from "@heroui/react";
+import toast from "react-hot-toast";
 
 const AddDestinationPage = () => {
 
@@ -17,6 +18,9 @@ const AddDestinationPage = () => {
           body: JSON.stringify(destination)
         })
         console.log(res)
+        if(res.ok){
+          toast.success("Destination added successfully!")
+        }
     }
   return (
     <div className="p-5 max-w-7xl mx-auto">
